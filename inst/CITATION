@@ -1,0 +1,7 @@
+bibentry(
+  bibtype  = "Software",
+  title    = "readr: Tools for Interacting with Survey Points Collected by Emlid GNSS Products",
+  author   = "Petry, W.K.",
+  year     = "2023",
+  url      = "https://github.com/DICELab-NCSU/reachr"
+)
