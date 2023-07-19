@@ -1,5 +1,5 @@
 bibentry(
-  bibtype  = "Software",
+  bibtype  = "Misc",
   title    = "readr: Tools for Interacting with Survey Points Collected by Emlid GNSS Products",
   author   = "Petry, W.K.",
   year     = "2023",

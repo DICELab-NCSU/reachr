@@ -1,17 +1,28 @@
 Package: reachr
-Title: Tools for Interacting with Survey Points Collected by Emlid GNSS Products
-Version: 0.0.0.9000
+Title: Tools for Interacting with Survey Points Collected by Emlid GNSS
+    Products
+Version: 0.1
 Authors@R: 
     person("William K.", "Petry", , "wpetry@ncsu.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5230-5987"))
-Description: Utility functions for interacting with data produced by Emlid Reach RS2(+) and
-    Emlid Studio.
+Description: Utility functions for interacting with data produced by Emlid
+    Reach RS2(+) and Emlid Studio.
 License: GPL (>= 3)
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
 URL: https://github.com/DICELab-NCSU/reachr
 BugReports: https://github.com/DICELab-NCSU/reachr/issues
-LazyData: true
 Imports: 
-    tibble
+    dplyr,
+    ggplot2,
+    lubridate,
+    sf,
+    stringr,
+    tibble,
+    units,
+    utils
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
