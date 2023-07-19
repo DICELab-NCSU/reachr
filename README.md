@@ -46,13 +46,6 @@ mypoints2 <- read_emlid("path/to/data/mypoints2.csv")  # imports with warning
 mypoints2 <- read_emlid("path/to/data/mypoints2.csv", crs = 4326)  # sets CRS
 ```
 
-### Prepare .csv file for Emlid Flow import
-
-Importing points from a .csv file into an Emlid Flow project requires following a strict 
-column order and naming convention. (As of July 2023, this is incompletely documented in the 
-import dialog.) reachr provides helper functions to convert `sf` objects into a correctly-formatted 
-.csv file.
-
 ### Update RTK coordinate to new base position
 
 For some RTK surveys, it is not possible to obtain a precise coordinate for the base position 
@@ -69,6 +62,14 @@ ensuring they can be imported into Emlid Flow
 - `as_ef_geom`: attempts to automatically coerce non-point geometries into (multi)point 
 geometries that can be imported into Emlid Flow
 - `check_rtk_range`: checks that points are within LoRa antenna range for RTK surveying
+
+## Planned features
+### Prepare .csv file for Emlid Flow import
+
+Importing points from a .csv file into an Emlid Flow project requires following a strict 
+column order and naming convention. (As of July 2023, this is incompletely documented in the 
+import dialog.) reachr provides helper functions to convert `sf` objects into a correctly-formatted 
+.csv file.
 
 ## Code of Conduct
   
