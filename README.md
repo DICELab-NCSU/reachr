@@ -1,9 +1,10 @@
 # reachr
 
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/reachr)](https://CRAN.R-project.org/package=reachr)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test coverage](https://codecov.io/gh/DICELab-NCSU/reachr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/DICELab-NCSU/reachr?branch=main)
 [![R-CMD-check](https://github.com/DICELab-NCSU/reachr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DICELab-NCSU/reachr/actions/workflows/R-CMD-check.yaml)
+[![CRAN status](https://www.r-pkg.org/badges/version/reachr)](https://CRAN.R-project.org/package=reachr)
 <!-- badges: end -->
 
 The goal of reachr is to provide utilities for working with data produced by 
