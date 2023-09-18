@@ -7,7 +7,9 @@
 read_emlid(
   file,
   format = c("guess", "shp", "csv", "csv_penzd", "dxf", "pos"),
-  crs = NULL
+  crs = NULL,
+  drop_z = FALSE,
+  ...
 )
 }
 \arguments{
@@ -18,6 +20,11 @@ extension.}
 
 \item{crs}{string. The coordinate reference system for the spatial data, supplied as an
 EPSG code, WKT, or proj4string.}
+
+\item{drop_z}{logical, whether or not to drop the z/vertical dimension from points.
+Defaults to FALSE.}
+
+\item{...}{passed to function that reads in the datafile}
 }
 \value{
 object of class sf
