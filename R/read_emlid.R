@@ -41,7 +41,7 @@ read_emlid <- function(file,
   } else {
     out <- rawdat
   }
-  if(!is.null(crs) & is.null(sf::st_crs(out))) {
+  if(!is.null(crs) & is.na(sf::st_crs(out))) {
     sf::st_crs(out) <- crs
   } else if(!is.null(crs) & sf::st_crs(crs) != sf::st_crs(out)){
     out <- sf::st_transform(out, crs = sf::st_crs(crs))
