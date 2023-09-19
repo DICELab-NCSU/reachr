@@ -3,7 +3,7 @@
 export(as_ef_geom)
 export(check_ef_geom)
 export(check_rtk_range)
-export(mk_vrs)
+export(llh_summary)
 export(read_emlid)
 export(update_base)
 import(ggplot2)

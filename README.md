@@ -63,6 +63,7 @@ ensuring they can be imported into Emlid Flow
 - `as_ef_geom`: attempts to automatically coerce non-point geometries into (multi)point 
 geometries that can be imported into Emlid Flow
 - `check_rtk_range`: checks that points are within LoRa antenna range for RTK surveying
+- `llh_summary`: summarizes the position and duration of .LLH log files
 
 ## Planned features
 ### Prepare .csv file for Emlid Flow import

@@ -1,4 +1,4 @@
-#' Convert LLH log file to inputs for downloading CORS/VRS corrections
+#' Summarize LLH log file to aid download of CORS/VRS corrections
 #'
 #' @param llh File path to .LLH log file
 #' @param rnd Number of minutes to round to on both ends of the logging duration (see Details)
@@ -21,10 +21,10 @@
 #'
 #' @examples
 #'\dontrun{
-#' mk_vrs(llh = "path/to/file.llh")
+#' llh_summary(llh = "path/to/file.llh")
 #'}
 #'
-mk_vrs <- function(llh, rnd = 0, ...) {
+llh_summary <- function(llh, rnd = 0, ...) {
   # read in log file
   rawdat <- read_llh(llh, ...)
   # make output
