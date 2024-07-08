@@ -42,7 +42,7 @@ llh_summary <- function(llh, rnd = 0, ...) {
   # prepare times for output
   start <- format(start, "%Y-%m-%d %H:%M:%S")
   end <- format(end, "%Y-%m-%d %H:%M:%S")
-  out$time <- data.frame(start = start, end = end, duration = dur)
+  out$time <- data.frame(start = start, end = end, duration = dur, samples = nrow(rawdat))
   return(out)
 }
 

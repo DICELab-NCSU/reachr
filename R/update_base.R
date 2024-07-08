@@ -19,7 +19,7 @@ update_base <- function(points, newbase, base_row = NULL,
   newbase <- newbase[base_row, ]
   offsetN <- newbase$Latitude - points$Base.latitude
   offsetE <- newbase$Longitude - points$Base.longitude
-  offsetU <- newbase$`Ellipsoidal height` - points$Ellipsoidal.height
+  offsetU <- newbase$`Ellipsoidal height` - points$Base.ellipsoidal.height
   out <- points
   out$Longitude <- out$Longitude + offsetE
   out$Latitude <- out$Latitude + offsetN
