@@ -1,74 +1,70 @@
 #' Utility functions
+#' @noRd
+clean_firefox_downloads <- function(download_dir) {
+  files <- list.files(download_dir, pattern = "\\.csv$", full.names = FALSE)
 
-clean_firefox_download <- function(download_dir, base_filename) {
-  base_path <- file.path(download_dir, base_filename)
+  # Pattern: extract base name and optional number
+  pattern <- "^(.+?)(\\((\\d+)\\))?\\.csv$"
+  matches <- regexec(pattern, files)
+  parts <- regmatches(files, matches)
 
-  # Construct the appended filename pattern e.g., "export (1).csv"
-  file_ext <- tools::file_ext(base_filename)
-  file_base <- tools::file_path_sans_ext(base_filename)
-  appended_path <- file.path(download_dir, paste0(file_base, " (1).", file_ext))
+  file_info <- data.frame(
+    filename = files,
+    base = vapply(parts, function(x) if (length(x) > 1) x[2] else NA_character_, character(1)),
+    version = vapply(parts, function(x) if (length(x) > 3 && nzchar(x[3])) as.integer(x[4]) else 0L, integer(1)),
+    stringsAsFactors = FALSE
+  )
 
-  # If appended file doesn't exist, nothing to do
-  if (!file.exists(appended_path)) {
-    message("No appended duplicate file found.")
-    return(invisible(NULL))
-  }
+  file_info <- file_info[!is.na(file_info$base), ]
 
-  if (!file.exists(base_path)) {
-    # Original doesn't exist, so rename appended to original
-    file.rename(appended_path, base_path)
-    message("Original file missing; renamed appended file to original name.")
-    return(invisible(NULL))
-  }
+  library(dplyr)
+  library(digest)
 
-  # Compare files byte-wise
-  base_hash <- digest::digest(file = base_path, algo = "md5")
-  appended_hash <- digest::digest(file = appended_path, algo = "md5")
+  file_info <- file_info %>%
+    group_by(base) %>%
+    arrange(version, .by_group = TRUE) %>%
+    mutate(keep = version == max(version))
 
-  if (base_hash == appended_hash) {
-    # Files identical: remove appended
-    file.remove(appended_path)
-    message("Duplicate file detected; removed appended file.")
-  } else {
-    # Files differ: replace original with appended
-    file.remove(base_path)
-    file.rename(appended_path, base_path)
-    message("Different file detected; replaced original with appended file.")
-  }
-}
+  for (base_name in unique(file_info$base)) {
+    group <- filter(file_info, base == base_name)
 
-load_tiles <- function(remDr, css_selector = "div.virtuoso-grid-item",
-                       pause = 2, scroll_step = 500, max_scrolls = 100) {
-  tile_map <- list()
+    # Skip if there's only one file (no duplicates)
+    if (nrow(group) == 1) next
 
-  for (i in seq_len(max_scrolls)) {
-    # Scroll down a little bit
-    remDr$executeScript(sprintf("window.scrollBy(0, %d);", scroll_step))
-    Sys.sleep(pause)
+    newest <- filter(group, keep == TRUE)
+    original <- filter(group, version == 0)
 
-    # Find currently visible tiles
-    tiles <- remDr$findElements(using = "css", value = css_selector)
+    newest_path <- file.path(download_dir, newest$filename)
+    original_path <- if (nrow(original) > 0) file.path(download_dir, original$filename) else NULL
 
-    # Add new tiles by unique data-index
-    new_tiles_added <- 0
-    for (tile in tiles) {
-      index <- tryCatch(tile$getElementAttribute("data-index")[[1]], error = function(e) NA)
-      if (!is.na(index) && !(index %in% names(tile_map))) {
-        tile_map[[index]] <- tile
-        new_tiles_added <- new_tiles_added + 1
+    # If original file exists, compare contents
+    if (!is.null(original_path) && file.exists(original_path)) {
+      hash_orig <- digest(original_path, algo = "md5")
+      hash_new <- digest(newest_path, algo = "md5")
+
+      if (hash_orig == hash_new) {
+        # Files identical → delete newest version
+        message("🗑 Duplicate contents — deleting: ", newest$filename)
+        file.remove(newest_path)
+        next
+      } else {
+        # Files differ → delete original, rename newest
+        message("🗑 Different contents — replacing: ", original$filename, " with ", newest$filename)
+        file.remove(original_path)
+        file.rename(newest_path, original_path)
       }
+    } else {
+      # No original — just rename newest
+      target_path <- file.path(download_dir, paste0(base_name, ".csv"))
+      message("🔄 No original — renaming: ", newest$filename, " → ", target_path)
+      file.rename(newest_path, target_path)
     }
 
-    message(sprintf("Scroll %d: %d new tiles, %d total collected",
-                    i, new_tiles_added, length(tile_map)))
-
-    # Break if no new tiles added this round
-    if (new_tiles_added == 0) {
-      message("✅ All tiles loaded.")
-      break
+    # Delete all older appended versions
+    to_delete <- filter(group, !keep & version > 0)
+    for (fname in to_delete$filename) {
+      message("🗑 Cleaning up older version: ", fname)
+      file.remove(file.path(download_dir, fname))
     }
   }
-
-  # Return the list of tile WebElements
-  unname(tile_map)
 }

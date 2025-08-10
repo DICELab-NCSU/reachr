@@ -16,7 +16,7 @@
 #' rnd = 15: 10:15:00-14:00:00, a duration of 04:15:00
 #' For additional information on rounding behaviors, see ?lubridate::round_date.
 #'
-#' @return a list containing the average logged position and
+#' @return A list containing the average logged position and position statistics.
 #' @export
 #'
 #' @examples

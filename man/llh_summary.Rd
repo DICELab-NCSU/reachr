@@ -14,7 +14,7 @@ llh_summary(llh, rnd = 0, ...)
 \item{...}{Additional arguments passed to utils::read.table()}
 }
 \value{
-a list containing the average logged position and
+A list containing the average logged position and position statistics.
 }
 \description{
 Summarize LLH log file to aid download of CORS/VRS corrections
