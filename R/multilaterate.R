@@ -3,11 +3,12 @@
 #' @param distances A named vector containing the distances from at least 3 ref_points to the target point.
 #' @param ref_points An sf object containing the reference point geometry and a 'Name' column.
 #' @param crs A projected coordinate reference system to use in the distance calculations if `ref_points` does not already have a projected CRS.
+#' @param plot Logical, whether to plot the multilateration solution.
 #'
 #' @details
 #' This function performs 2D multilateration via optimization. The optimization will fail or give nonsensical results if the units of `distances` and `crs` are not identical. It is recommended that both use meters. The standard errors for the x coordinate, y coordinate, and xy positional uncertainty are calculated from the Hessian of the objective function.
 #'
-#' @returns A list, with xy coordinates in `coords` and measures of coordinate and positional uncertainty in `se`.
+#' @returns A list, with xy coordinates in `coords`, measures of coordinate and positional uncertainty in `se`, and the mean ellipsoidal height of the reference points in `mean_ellipsoid_height`.
 #' @export
 #'
 #' @examples
@@ -19,8 +20,9 @@
 #' ), coords = c("x", "y"), crs = 32613)
 #' multilaterate(distances = d, ref_points = ref)
 
-multilaterate <- function(distances, ref_points, crs = NULL) {
+multilaterate <- function(distances, ref_points, crs = NULL, plot = TRUE) {
   # Check inputs
+  distances <- distances[sort(names(distances))]
   stopifnot(is.numeric(distances), !is.null(names(distances)))
   matched_refs <- ref_points[ref_points$Name %in% names(distances), ]
   if (nrow(matched_refs) < 3) {
@@ -71,9 +73,13 @@ multilaterate <- function(distances, ref_points, crs = NULL) {
     se_y <- sqrt(cov_matrix[2, 2])
     se_xy <- sqrt(se_x^2 + se_y^2)
   }
+  if (plot) {
+    multilaterate_plot(r = dists, xy = coords, est = est_xy)
+  }
   out <- list(
     coords = coords_out,
-    se = c(se_x = se_x, se_y = se_y, se_xy = se_xy)
+    se = c(se_x = se_x, se_y = se_y, se_xy = se_xy),
+    mean_ellipsoid_height = mean(matched_refs$Ellipsoidal.height)
   )
   return(out)
 }

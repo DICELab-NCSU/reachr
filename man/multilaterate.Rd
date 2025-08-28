@@ -4,7 +4,7 @@
 \alias{multilaterate}
 \title{Determine target point coordinates from distances to known points}
 \usage{
-multilaterate(distances, ref_points, crs = NULL)
+multilaterate(distances, ref_points, crs = NULL, plot = TRUE)
 }
 \arguments{
 \item{distances}{A named vector containing the distances from at least 3 ref_points to the target point.}
@@ -12,9 +12,11 @@ multilaterate(distances, ref_points, crs = NULL)
 \item{ref_points}{An sf object containing the reference point geometry and a 'Name' column.}
 
 \item{crs}{A projected coordinate reference system to use in the distance calculations if \code{ref_points} does not already have a projected CRS.}
+
+\item{plot}{Logical, whether to plot the multilateration solution.}
 }
 \value{
-A list, with xy coordinates in \code{coords} and measures of coordinate and positional uncertainty in \code{se}.
+A list, with xy coordinates in \code{coords}, measures of coordinate and positional uncertainty in \code{se}, and the mean ellipsoidal height of the reference points in \code{mean_ellipsoid_height}.
 }
 \description{
 Determine target point coordinates from distances to known points

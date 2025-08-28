@@ -65,3 +65,13 @@ clean_firefox_downloads <- function(download_dir) {
     }
   }
 }
+
+multilaterate_plot <- function(r, xy, est) {
+  dat <- data.frame(name = names(r), r, xy) |>
+    sf::st_as_sf(coords = c("X", "Y")) |>
+    sf::st_buffer(dist = r)
+  plot(sf::st_geometry(dat))
+  points(xy, pch = 19, col = "grey")
+  text(xy, labels = names(r), cex = 0.85)
+  points(x = est["X"], y = est["Y"], pch = 19, col = "blue")
+}
