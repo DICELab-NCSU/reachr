@@ -17,30 +17,27 @@ clean_firefox_downloads <- function(download_dir) {
 
   file_info <- file_info[!is.na(file_info$base), ]
 
-  library(dplyr)
-  library(digest)
-
-  file_info <- file_info %>%
-    group_by(base) %>%
-    arrange(version, .by_group = TRUE) %>%
-    mutate(keep = version == max(version))
+  file_info <- file_info |>
+    dplyr::group_by(base) |>
+    dplyr::arrange(version, .by_group = TRUE) |>
+    dplyr::mutate(keep = version == max(version))
 
   for (base_name in unique(file_info$base)) {
-    group <- filter(file_info, base == base_name)
+    group <- dplyr::filter(file_info, base == base_name)
 
     # Skip if there's only one file (no duplicates)
     if (nrow(group) == 1) next
 
-    newest <- filter(group, keep == TRUE)
-    original <- filter(group, version == 0)
+    newest <- dplyr::filter(group, keep == TRUE)
+    original <- dplyr::filter(group, version == 0)
 
     newest_path <- file.path(download_dir, newest$filename)
     original_path <- if (nrow(original) > 0) file.path(download_dir, original$filename) else NULL
 
     # If original file exists, compare contents
     if (!is.null(original_path) && file.exists(original_path)) {
-      hash_orig <- digest(original_path, algo = "md5")
-      hash_new <- digest(newest_path, algo = "md5")
+      hash_orig <- digest::digest(original_path, algo = "md5")
+      hash_new <- digest::digest(newest_path, algo = "md5")
 
       if (hash_orig == hash_new) {
         # Files identical → delete newest version
@@ -61,7 +58,7 @@ clean_firefox_downloads <- function(download_dir) {
     }
 
     # Delete all older appended versions
-    to_delete <- filter(group, !keep & version > 0)
+    to_delete <- dplyr::filter(group, !keep & version > 0)
     for (fname in to_delete$filename) {
       message("🗑 Cleaning up older version: ", fname)
       file.remove(file.path(download_dir, fname))

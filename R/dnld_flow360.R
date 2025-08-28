@@ -5,14 +5,18 @@
 #' @param usr Emlid credential username.
 #' @param pwd Emlid credential password.
 #' @param mult Multiplier of default wait times.
+#' @param scroll_step Pixel distance to move when scrolling down.
+#' @param max_scrolls Maximum number of scroll movements to attempt.
 #'
 #' @returns (Invisible) Files will be downloaded to the specified directory.
 #' @import RSelenium
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' dnld_flow360(dir = "~/Downloads")
-#'
+#' }
+
 dnld_flow360 <- function(dir = "~/Downloads", overwrite = FALSE,
                          usr = Sys.getenv("EMLID_USER"),
                          pwd = Sys.getenv("EMLID_PASSWORD"),
@@ -151,7 +155,7 @@ dnld_flow360 <- function(dir = "~/Downloads", overwrite = FALSE,
 
   # Clean up file names in download directory
   if (overwrite) {
-    reachr:::clean_firefox_download(dir = dir)
+    clean_firefox_download(dir = dir)
   }
 
   # Close Selenium instance

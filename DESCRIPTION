@@ -15,11 +15,11 @@ Imports:
     dplyr,
     ggplot2,
     lubridate,
+    numDeriv,
     RSelenium,
     sf,
     stringr,
     tibble,
-    tools,
     units,
     utils
 Suggests: 

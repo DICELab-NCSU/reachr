@@ -24,6 +24,10 @@ dnld_flow360(
 \item{pwd}{Emlid credential password.}
 
 \item{mult}{Multiplier of default wait times.}
+
+\item{scroll_step}{Pixel distance to move when scrolling down.}
+
+\item{max_scrolls}{Maximum number of scroll movements to attempt.}
 }
 \value{
 (Invisible) Files will be downloaded to the specified directory.
@@ -32,6 +36,7 @@ dnld_flow360(
 Download Emlid Flow360 projects
 }
 \examples{
+\dontrun{
 dnld_flow360(dir = "~/Downloads")
-
+}
 }

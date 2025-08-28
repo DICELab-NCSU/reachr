@@ -30,7 +30,7 @@ rinex_summary <- function(rinex) {
   obs_type_lines <- grep("SYS / # / OBS TYPES", lines, value = TRUE)
 
   # Extract system letter and number of satellites
-  sat_counts <- setNames(rep(0L, length(system_codes)), system_codes)
+  sat_counts <- stats::setNames(rep(0L, length(system_codes)), system_codes)
   for (ln in obs_type_lines) {
     sys <- substr(ln, 1, 1)
     # the number of satellites is in cols 6-6? No — RINEX format: cols 6-6? Actually 2-6? We'll match with regex
