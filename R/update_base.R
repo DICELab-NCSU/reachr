@@ -17,16 +17,17 @@ update_base <- function(points, newbase, base_row = NULL,
   if(is.null(base_row) & nrow(newbase) > 1L) stop("Must specify which row of 'newbase' contains the base position")
   if(is.null(base_row)) base_row <- 1L
   newbase <- newbase[base_row, ]
-  offsetN <- newbase$Latitude - points$Base.latitude
-  offsetE <- newbase$Longitude - points$Base.longitude
-  offsetU <- newbase$`Ellipsoidal height` - points$Base.ellipsoidal.height
+  offsetY <- newbase$Latitude - points$Base.latitude
+  offsetX <- newbase$Longitude - points$Base.longitude
+  offsetU <- newbase$Ellipsoidal.height - points$Base.ellipsoidal.height
   out <- points
-  out$Longitude <- out$Longitude + offsetE
-  out$Latitude <- out$Latitude + offsetN
+  out$Longitude <- out$Longitude + offsetX
+  out$Latitude <- out$Latitude + offsetY
   out$Ellipsoidal.height <- out$Ellipsoidal.height + offsetU
   out$Base.longitude <- newbase$Longitude
   out$Base.latitude <- newbase$Latitude
   out$Base.ellipsoidal.height <- newbase$`Ellipsoidal height`
-  if(!is.null(destfile)) utils::write.csv(out, file = destfile, na = "")
+  names(out) <- gsub(pattern = "\\.", replacement = " ", x = names(out))
+  if(!is.null(destfile)) utils::write.csv(out, file = destfile, na = "", row.names = FALSE)
   return(out)
 }
