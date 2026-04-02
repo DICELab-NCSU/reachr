@@ -12,6 +12,7 @@ Utility functions for interacting with data produced by Emlid Reach RS2(+) and E
 Useful links:
 \itemize{
   \item \url{https://github.com/DICELab-NCSU/reachr}
+  \item \url{https://dicelab-ncsu.github.io/reachr/}
   \item Report bugs at \url{https://github.com/DICELab-NCSU/reachr/issues}
 }
 

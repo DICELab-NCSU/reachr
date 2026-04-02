@@ -4,7 +4,14 @@
 \alias{multilaterate}
 \title{Determine target point coordinates from distances to known points}
 \usage{
-multilaterate(distances, ref_points, crs = NULL, plot = TRUE)
+multilaterate(
+  distances,
+  ref_points,
+  crs = NULL,
+  ellipse_conf = 0.95,
+  plot = TRUE,
+  ...
+)
 }
 \arguments{
 \item{distances}{A named vector containing the distances from at least 3 ref_points to the target point.}
@@ -13,7 +20,11 @@ multilaterate(distances, ref_points, crs = NULL, plot = TRUE)
 
 \item{crs}{A projected coordinate reference system to use in the distance calculations if \code{ref_points} does not already have a projected CRS.}
 
+\item{ellipse_conf}{The confidence level for the uncertainty ellipse (0, 1).}
+
 \item{plot}{Logical, whether to plot the multilateration solution.}
+
+\item{...}{Additional options passed to sf::plot()}
 }
 \value{
 A list, with xy coordinates in \code{coords}, measures of coordinate and positional uncertainty in \code{se}, and the mean ellipsoidal height of the reference points in \code{mean_ellipsoid_height}.
@@ -22,14 +33,14 @@ A list, with xy coordinates in \code{coords}, measures of coordinate and positio
 Determine target point coordinates from distances to known points
 }
 \details{
-This function performs 2D multilateration via optimization. The optimization will fail or give nonsensical results if the units of \code{distances} and \code{crs} are not identical. It is recommended that both use meters. The standard errors for the x coordinate, y coordinate, and xy positional uncertainty are calculated from the Hessian of the objective function.
+This function performs 2D multilateration via optimization. The optimization will fail or give nonsensical results if the units of \code{distances} and \code{crs} are not identical. It is strongly recommended to use a projected coordinate system. The standard errors for the x coordinate, y coordinate, and xy positional uncertainty are calculated from the Hessian of the objective function.
 }
 \examples{
-d <- c(A = 7.1, B = 7.2, C = 7.0, D = 7.1)
+d <- c(A = 10.1, B = 7.7, C = 8.0, D = 13.8)
 ref <- sf::st_as_sf(data.frame(
  Name = c("A", "B", "C", "D"),
- x = c(0, 10, 0, 10),
-  y = c(0, 0, 10, 10)
+ x = c(0, 10, 0, 18),
+  y = c(0, 0, 10, 18)
 ), coords = c("x", "y"), crs = 32613)
-multilaterate(distances = d, ref_points = ref)
+multilaterate(distances = d, ref_points = ref, ellipse_conf = 0.95)
 }

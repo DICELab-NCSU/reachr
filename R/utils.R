@@ -66,12 +66,23 @@ clean_firefox_downloads <- function(download_dir) {
   }
 }
 
-multilaterate_plot <- function(r, xy, est) {
+draw_ellipse <- function(center, axes, angle = 0, n = 100, ...) {
+  t <- seq(0, 2*pi, length.out = n)
+  R <- matrix(c(cos(angle), -sin(angle),
+                sin(angle),  cos(angle)), 2, 2)
+  pts <- t(sapply(t, function(tt) {
+    center + R %*% (axes * c(cos(tt), sin(tt)))
+  }))
+  lines(pts[,1], pts[,2], ...)
+}
+
+multilaterate_plot <- function(r, xy, est, axes, angle, ...) {
   dat <- data.frame(name = names(r), r, xy) |>
     sf::st_as_sf(coords = c("X", "Y")) |>
     sf::st_buffer(dist = r)
-  plot(sf::st_geometry(dat))
-  points(xy, pch = 19, col = "grey")
-  text(xy, labels = names(r), cex = 0.85)
-  points(x = est["X"], y = est["Y"], pch = 19, col = "blue")
+  plot(sf::st_geometry(dat), axes = TRUE, asp = 1, xlab = "x", ylab = "y", ...)
+  graphics::points(xy, pch = 19, col = "grey")
+  graphics::text(xy, labels = names(r), cex = 0.85)
+  draw_ellipse(center = est, axes = axes, angle = angle, col = grDevices::rgb(0, 0, 1, 0.4), lty = 0)
+  graphics::points(x = est["X"], y = est["Y"], pch = 19, col = "blue")
 }
