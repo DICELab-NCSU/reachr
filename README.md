@@ -5,6 +5,7 @@
 [![Codecov test coverage](https://codecov.io/gh/DICELab-NCSU/reachr/branch/main/graph/badge.svg)](https://app.codecov.io/gh/DICELab-NCSU/reachr?branch=main)
 [![R-CMD-check](https://github.com/DICELab-NCSU/reachr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DICELab-NCSU/reachr/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/reachr)](https://CRAN.R-project.org/package=reachr)
+[![Codecov test coverage](https://codecov.io/gh/DICELab-NCSU/reachr/graph/badge.svg)](https://app.codecov.io/gh/DICELab-NCSU/reachr)
 <!-- badges: end -->
 
 The goal of reachr is to provide utilities for working with data produced by 
