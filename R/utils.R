@@ -40,27 +40,27 @@ clean_firefox_downloads <- function(download_dir) {
       hash_new <- digest::digest(newest_path, algo = "md5")
 
       if (hash_orig == hash_new) {
-        # Files identical → delete newest version
-        message("🗑 Duplicate contents — deleting: ", newest$filename)
+        # Files identical -> delete newest version
+        message("Duplicate contents - deleting: ", newest$filename)
         file.remove(newest_path)
         next
       } else {
-        # Files differ → delete original, rename newest
-        message("🗑 Different contents — replacing: ", original$filename, " with ", newest$filename)
+        # Files differ -> delete original, rename newest
+        message("Different contents - replacing: ", original$filename, " with ", newest$filename)
         file.remove(original_path)
         file.rename(newest_path, original_path)
       }
     } else {
-      # No original — just rename newest
+      # No original -> just rename newest
       target_path <- file.path(download_dir, paste0(base_name, ".csv"))
-      message("🔄 No original — renaming: ", newest$filename, " → ", target_path)
+      message("No original - renaming: ", newest$filename, " -> ", target_path)
       file.rename(newest_path, target_path)
     }
 
     # Delete all older appended versions
     to_delete <- dplyr::filter(group, !keep & version > 0)
     for (fname in to_delete$filename) {
-      message("🗑 Cleaning up older version: ", fname)
+      message("Cleaning up older version: ", fname)
       file.remove(file.path(download_dir, fname))
     }
   }

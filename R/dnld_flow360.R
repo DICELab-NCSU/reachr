@@ -67,7 +67,7 @@ dnld_flow360 <- function(dir = "~/Downloads", overwrite = FALSE,
   pause <- 1 * mult
 
   for (i in seq_len(max_scrolls)) {
-    message(sprintf("\n🔄 Page %d", i))
+    message(sprintf("\nPage %d", i))
 
     # Scroll down a bit
     remDr$executeScript(sprintf("window.scrollBy(0, %d);", scroll_step))
@@ -81,7 +81,7 @@ dnld_flow360 <- function(dir = "~/Downloads", overwrite = FALSE,
       index <- tryCatch(tile$getElementAttribute("data-index")[[1]], error = function(e) NA)
       if (is.na(index) || index %in% downloaded_indices) next
 
-      message(sprintf("📦 Exporting tile with data-index: %s", index))
+      message(sprintf("Exporting tile with data-index: %s", index))
 
       # Scroll tile into view
       remDr$executeScript("arguments[0].scrollIntoView(true);", list(tile))
@@ -140,13 +140,13 @@ dnld_flow360 <- function(dir = "~/Downloads", overwrite = FALSE,
         Sys.sleep(4 * mult)  # wait for download to start
         downloaded_indices <- c(downloaded_indices, index)
       } else {
-        message(sprintf("⚠️ Final Export button not found for tile %s", index))
+        message(sprintf("Final Export button not found for tile %s", index))
       }
     }
 
     # Stop if no new tiles found this scroll
     if (i > 1 && length(downloaded_indices) == prev_count) {
-      message("✅ All available tiles processed.")
+      message("All available tiles processed.")
       break
     }
 
