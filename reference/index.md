@@ -21,3 +21,6 @@
   : Summarize Rinex observation file
 - [`update_base()`](https://dicelab-ncsu.github.io/reachr/reference/update_base.md)
   : Update coordinates to use a new base position
+- [`write_emlid_csv()`](https://dicelab-ncsu.github.io/reachr/reference/write_emlid_csv.md)
+  : Write simple features spatial data to an Emlid Flow-compatible CSV
+  file
