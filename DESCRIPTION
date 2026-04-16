@@ -20,6 +20,7 @@ Imports:
     numDeriv,
     RSelenium,
     sf,
+    stats,
     stringr,
     tibble,
     units,

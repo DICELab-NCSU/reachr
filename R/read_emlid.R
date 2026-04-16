@@ -21,12 +21,12 @@ read_emlid <- function(file,
   if(format == "guess") {
     format <- stringr::str_extract(file, pattern = "\\.([A-z]+$)", group = TRUE)
   }
-  rawdat <- switch (format,
-                    "csv" = read.csv(file, ...),
-                    "shp" = sf::st_read(file, ...),
-                    "dxf" = sf::st_read(file, query = 'select *, OGR_STYLE from entities',
-                                        as_tibble = FALSE, stringsAsFactors = TRUE, ...),
-                    "pos" = suppressMessages(read_emlid_pos(file, ...))
+  rawdat <- switch(format,
+                   "csv" = read.csv(file, ...),
+                   "shp" = sf::st_read(file, ...),
+                   "dxf" = sf::st_read(file, query = 'select *, OGR_STYLE from entities',
+                                       as_tibble = FALSE, stringsAsFactors = TRUE, ...),
+                   "pos" = suppressMessages(read_emlid_pos(file, ...))
   )
   if(format == "csv") {
     coords <- sf::st_as_sfc(apply(rawdat[, c("Longitude", "Latitude",
