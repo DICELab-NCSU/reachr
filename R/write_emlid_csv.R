@@ -34,5 +34,5 @@ write_emlid_csv <- function(x, file) {
     }
   }
   out <- x[, canonical_names]
-  utils::write.csv(out, file, na = "")
+  utils::write.csv(out, file, na = "", row.names = FALSE)
 }
