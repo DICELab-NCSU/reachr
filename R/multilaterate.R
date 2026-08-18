@@ -41,7 +41,7 @@ multilaterate <- function(distances, ref_points, crs = NULL, ellipse_conf = 0.95
   }
   # Extract coordinates and match order with distances
   coords <- sf::st_coordinates(matched_refs)
-  dists <- distances[matched_refs$Name]
+  dists <- distances[as.character(matched_refs$Name)]
   # Optimization: minimize squared error between supplied and candidate distances
   objective <- function(par) {
     x <- par[1]
