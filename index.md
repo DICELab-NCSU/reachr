@@ -11,6 +11,7 @@ submitted to CRAN. You can install the development version of reachr
 from [GitHub](https://github.com/) with:
 
 ``` r
+
 # install.packages(c("remotes"))
 remotes::install_github("DICELab-NCSU/reachr")
 ```
@@ -18,6 +19,7 @@ remotes::install_github("DICELab-NCSU/reachr")
 The package can be loaded with:
 
 ``` r
+
 library(reachr)
 ```
 
@@ -30,6 +32,7 @@ formats for spatial data used by Emlid, returning an `sf` object. The
 function guessed the file format based on the file extension.
 
 ``` r
+
 mypoints <- read_emlid("path/to/data/mypoints.shp")
 ```
 
@@ -39,6 +42,7 @@ CRS and allows users to specify the CRS during import using standard
 formats: EPSG codes, WKT, or proj4string.
 
 ``` r
+
 mypoints2 <- read_emlid("path/to/data/mypoints2.csv")  # imports with warning
 mypoints2 <- read_emlid("path/to/data/mypoints2.csv", crs = 4326)  # sets CRS
 ```
